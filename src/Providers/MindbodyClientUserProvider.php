@@ -15,7 +15,8 @@ class MindbodyClientUserProvider implements UserProvider {
 
     public function __construct()
     {
-        $this->model = config('auth.providers.users.model');
+        $model = config('auth.providers.users.model');
+        $this->model = new $model();
         $this->mindbodyApi = new MindbodyService;
     }
 
@@ -69,34 +70,6 @@ class MindbodyClientUserProvider implements UserProvider {
     {
         $user = null;
 
-//        $getStaffResult = $this->mindbodyApi->GetStaff([
-//            'StaffCredentials' => [
-//                'SiteIDs' => [27796],
-//            ],
-//        ])->GetStaffResult;
-//
-//        if ( ! isset ($getStaffResult->ErrorCode) || ! $getStaffResult->ErrorCode == 200)
-//        {
-//            abort(500, "Mindbody API error.");
-//        }
-//
-//        if ( ! isset ($getStaffResult->StaffMembers) || ! count($getStaffResult->StaffMembers) > 0)
-//        {
-//            abort(500, "Mindbody returned no users.");
-//        }
-//
-//        foreach ($getStaffResult->StaffMembers->Staff as $staffMember)
-//        {
-//            if ( ! isset($staffMember->Email) || $staffMember->ID <= 0) continue;
-//            if ($staffMember->Email == $credentials['email'])
-//            {
-//                $user = User::firstOrNew(['email' => $credentials['email']])->fill([
-//                    'name' => "$staffMember->FirstName $staffMember->LastName",
-//                ]);
-//                $user->save();
-//            }
-//        }
-
         $user = $this->model->firstOrNew(['email' => $credentials['email']]);
 
         Log::debug("retrieveByCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
@@ -126,13 +99,8 @@ class MindbodyClientUserProvider implements UserProvider {
         $validateLoginResult = $this->mindbodyApi->ValidateLogin([
             'Username' => $credentials['email'],
             'Password' => $credentials['password']
-//            'StaffCredentials' => [
-//                'SiteIDs'  => [27796],
-//                'Username' => $credentials['email'],
-//                'Password' => $credentials['password'],
-//            ]
         ])->ValidateLoginResult;
-        
+
         if ( ! isset ($validateLoginResult->ErrorCode) || $validateLoginResult->ErrorCode != 200)
         {
             Log::debug("validateCredentials: login failed at " . __LINE__);
@@ -141,9 +109,12 @@ class MindbodyClientUserProvider implements UserProvider {
             return false;
         }
 
-//        $user->fill([
-//            'name' => isset($validateLoginResult->StaffMembers->Staff->FirstName) ? $validateLoginResult->StaffMembers->Staff->FirstName : null
-//        ]);
+        $client = $validateLoginResult->Client;
+
+        $user->fill([
+            'name' => isset($client->FirstName) && $client->LastName
+                ? "$client->FirstName $client->LastName" : null
+        ]);
 
         Log::debug("validateCredentials: login succeeded at " . __LINE__);
 
