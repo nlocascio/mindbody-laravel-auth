@@ -97,10 +97,9 @@ class MindbodyUserProvider implements UserProvider {
 //            }
 //        }
 
-        $user = $this->model->firstOrNew(['email' => $credentials['username']]);
+        $user = $this->model->firstOrNew(['email' => $credentials['email']]);
 
         Log::debug("retrieveByCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
-
 
         return $user;
     }
@@ -117,25 +116,26 @@ class MindbodyUserProvider implements UserProvider {
 
         Log::debug("validateCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
 
-        if ( ! $user->username == $credentials['username'])
+        if ( ! $user->email == $credentials['email'])
         {
             Log::debug("validateCredentials: login failed at " . __LINE__);
+
             return false;
         }
 
         $getStaffResult = $this->mindbodyApi->GetStaff([
             'StaffCredentials' => [
                 'SiteIDs'  => [27796],
-                'Username' => $credentials['username'],
+                'Username' => $credentials['email'],
                 'Password' => $credentials['password'],
             ]
         ])->GetStaffResult;
-
-
+        
         if ( ! isset ($getStaffResult->ErrorCode) || $getStaffResult->ErrorCode != 200)
         {
             Log::debug("validateCredentials: login failed at " . __LINE__);
-            Log::debug("validateCredentials: " .json_encode($getStaffResult));
+            Log::debug("validateCredentials: " . json_encode($getStaffResult));
+
             return false;
         }
 
@@ -144,6 +144,7 @@ class MindbodyUserProvider implements UserProvider {
         ]);
 
         Log::debug("validateCredentials: login succeeded at " . __LINE__);
+
         return $user->save();
 
     }
