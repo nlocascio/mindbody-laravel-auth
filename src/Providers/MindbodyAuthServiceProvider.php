@@ -16,9 +16,12 @@ class MindbodyAuthServiceProvider extends ServiceProvider
     {
         $model = config('mindbody-laravel-auth.model');
 
-        Auth::provider('mindbody', function($app, array $config) use ($model) {
-            // Return an instance of Illuminate\Contracts\Auth\UserProvider...
-            return new MindbodyUserProvider(new $model());
+        Auth::provider('mindbody-staff', function() use ($model) {
+            return new MindbodyStaffUserProvider;
+        });
+
+        Auth::provider('mindbody-client', function() use ($model) {
+            return new MindbodyClientUserProvider;
         });
     }
 

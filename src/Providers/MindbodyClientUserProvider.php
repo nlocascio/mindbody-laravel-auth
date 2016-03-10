@@ -8,14 +8,14 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Log;
 use Nlocascio\Mindbody\Services\MindbodyService;
 
-class MindbodyUserProvider implements UserProvider {
+class MindbodyClientUserProvider implements UserProvider {
 
     public $model;
     protected $mindbodyApi;
 
-    public function __construct(Authenticatable $model)
+    public function __construct()
     {
-        $this->model = $model;
+        $this->model = config('auth.providers.users.model');
         $this->mindbodyApi = new MindbodyService;
     }
 
@@ -123,25 +123,27 @@ class MindbodyUserProvider implements UserProvider {
             return false;
         }
 
-        $getStaffResult = $this->mindbodyApi->GetStaff([
-            'StaffCredentials' => [
-                'SiteIDs'  => [27796],
-                'Username' => $credentials['email'],
-                'Password' => $credentials['password'],
-            ]
-        ])->GetStaffResult;
+        $validateLoginResult = $this->mindbodyApi->ValidateLogin([
+            'Username' => $credentials['email'],
+            'Password' => $credentials['password']
+//            'StaffCredentials' => [
+//                'SiteIDs'  => [27796],
+//                'Username' => $credentials['email'],
+//                'Password' => $credentials['password'],
+//            ]
+        ])->ValidateLoginResult;
         
-        if ( ! isset ($getStaffResult->ErrorCode) || $getStaffResult->ErrorCode != 200)
+        if ( ! isset ($validateLoginResult->ErrorCode) || $validateLoginResult->ErrorCode != 200)
         {
             Log::debug("validateCredentials: login failed at " . __LINE__);
-            Log::debug("validateCredentials: " . json_encode($getStaffResult));
+            Log::debug("validateCredentials: " . json_encode($validateLoginResult));
 
             return false;
         }
 
-        $user->fill([
-            'name' => isset($getStaffResult->StaffMembers->Staff->FirstName) ? $getStaffResult->StaffMembers->Staff->FirstName : null
-        ]);
+//        $user->fill([
+//            'name' => isset($validateLoginResult->StaffMembers->Staff->FirstName) ? $validateLoginResult->StaffMembers->Staff->FirstName : null
+//        ]);
 
         Log::debug("validateCredentials: login succeeded at " . __LINE__);
 
