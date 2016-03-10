@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "82ed64171f0cbbefee38592759ca7896",
-    "content-hash": "e1ccf0ed57d83b98be961667c559d360",
+    "hash": "f6dec660b26ae6931c25549ae79df0db",
+    "content-hash": "30fe6a02bffadec3f57c8f978edfc164",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -742,7 +742,7 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "/Users/nlocascio/Code/mindbody-laravel",
+                "url": "/Users/nlocascio/Code/packages/mindbody-laravel",
                 "reference": "e0b8ba3ec06a56e633c42d09c84e7a64a34b9015"
             },
             "require": {
@@ -1813,6 +1813,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.4.0"
+    },
     "platform-dev": []
 }

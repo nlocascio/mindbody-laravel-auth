@@ -8,6 +8,11 @@
         "laravel/framework": "5.*",
         "nlocascio/mindbody-laravel": "*@dev"
     },
+    "autoload": {
+        "psr-4": {
+            "Nlocascio\\MindbodyAuth\\": "src"
+        }
+    },
     "authors": [
         {
             "name": "Nick LoCascio",
