@@ -1,0 +1,17 @@
+{
+    "name": "nlocascio/mindbody-laravel-auth",
+    "description": "MINDBODY Auth Wrapper for Laravel",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "laravel/framework": "5.*",
+        "nlocascio/mindbody-laravel": "*@dev"
+    },
+    "authors": [
+        {
+            "name": "Nick LoCascio",
+            "email": "nlocascio@gmail.com"
+        }
+    ]
+}
