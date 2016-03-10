@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Log;
 use Nlocascio\Mindbody\Services\MindbodyService;
 
-class MindbodyUserProvider implements UserProvider {
+class MindbodyStaffUserProvider implements UserProvider {
 
     public $model;
     protected $mindbodyApi;
