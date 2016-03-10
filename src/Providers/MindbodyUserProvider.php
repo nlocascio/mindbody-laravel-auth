@@ -97,7 +97,7 @@ class MindbodyUserProvider implements UserProvider {
 //            }
 //        }
 
-        $user = $this->model->firstOrNew(['username' => $credentials['username']]);
+        $user = $this->model->firstOrNew(['email' => $credentials['username']]);
 
         Log::debug("retrieveByCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
 
