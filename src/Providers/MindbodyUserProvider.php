@@ -130,7 +130,7 @@ class MindbodyUserProvider implements UserProvider {
                 'Password' => $credentials['password'],
             ]
         ])->GetStaffResult;
-        
+
         if ( ! isset ($getStaffResult->ErrorCode) || $getStaffResult->ErrorCode != 200)
         {
             Log::debug("validateCredentials: login failed at " . __LINE__);
