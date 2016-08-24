@@ -85,19 +85,15 @@ class MindbodyStaffUserProvider implements UserProvider {
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-
-        Log::debug("validateCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
-
         if ( ! $user->email == $credentials['email'])
         {
-            Log::debug("validateCredentials: login failed at " . __LINE__);
 
             return false;
         }
 
         $getStaffResult = $this->mindbodyApi->GetStaff([
             'StaffCredentials' => [
-                'SiteIDs'  => [27796],
+                'SiteIDs'  => [27796],                  // TODO - auth for site IDs set in config
                 'Username' => $credentials['email'],
                 'Password' => $credentials['password'],
             ]
@@ -105,8 +101,6 @@ class MindbodyStaffUserProvider implements UserProvider {
 
         if ( ! isset ($getStaffResult->ErrorCode) || $getStaffResult->ErrorCode != 200)
         {
-            Log::debug("validateCredentials: login failed at " . __LINE__);
-            Log::debug("validateCredentials: " . json_encode($getStaffResult));
 
             return false;
         }
@@ -115,9 +109,6 @@ class MindbodyStaffUserProvider implements UserProvider {
             'name' => isset($getStaffResult->StaffMembers->Staff->FirstName) ? $getStaffResult->StaffMembers->Staff->FirstName : null
         ]);
 
-        Log::debug("validateCredentials: login succeeded at " . __LINE__);
-
         return $user->save();
-
     }
 }

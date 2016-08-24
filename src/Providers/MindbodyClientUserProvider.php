@@ -8,7 +8,8 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\Log;
 use Nlocascio\Mindbody\Services\MindbodyService;
 
-class MindbodyClientUserProvider implements UserProvider {
+class MindbodyClientUserProvider implements UserProvider
+{
 
     public $model;
     protected $mindbodyApi;
@@ -54,8 +55,7 @@ class MindbodyClientUserProvider implements UserProvider {
      */
     public function updateRememberToken(Authenticatable $user, $token)
     {
-        if ($user != null)
-        {
+        if ($user != null) {
             $user->setRememberToken($token);
         }
     }
@@ -72,8 +72,6 @@ class MindbodyClientUserProvider implements UserProvider {
 
         $user = $this->model->firstOrNew(['email' => $credentials['email']]);
 
-        Log::debug("retrieveByCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
-
         return $user;
     }
 
@@ -86,13 +84,7 @@ class MindbodyClientUserProvider implements UserProvider {
      */
     public function validateCredentials(Authenticatable $user, array $credentials)
     {
-
-        Log::debug("validateCredentials: " . json_encode($user) . ' ' . json_encode($credentials));
-
-        if ( ! $user->email == $credentials['email'])
-        {
-            Log::debug("validateCredentials: login failed at " . __LINE__);
-
+        if (!$user->email == $credentials['email']) {
             return false;
         }
 
@@ -101,11 +93,7 @@ class MindbodyClientUserProvider implements UserProvider {
             'Password' => $credentials['password']
         ])->ValidateLoginResult;
 
-        if ( ! isset ($validateLoginResult->ErrorCode) || $validateLoginResult->ErrorCode != 200)
-        {
-            Log::debug("validateCredentials: login failed at " . __LINE__);
-            Log::debug("validateCredentials: " . json_encode($validateLoginResult));
-
+        if (!isset ($validateLoginResult->ErrorCode) || $validateLoginResult->ErrorCode != 200) {
             return false;
         }
 
@@ -116,9 +104,6 @@ class MindbodyClientUserProvider implements UserProvider {
                 ? "$client->FirstName $client->LastName" : null
         ]);
 
-        Log::debug("validateCredentials: login succeeded at " . __LINE__);
-
         return $user->save();
-
     }
 }
