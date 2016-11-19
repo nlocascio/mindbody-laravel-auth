@@ -19,15 +19,15 @@ class MindbodyAuthServiceProvider extends ServiceProvider
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/mindbody-laravel-auth.php', 'mindbody-auth'
+            __DIR__.'/../../config/mindbody-laravel-auth.php', 'mindbody_auth'
         );
 
-        Auth::provider('mindbody-staff', function() {
-            return new MindbodyStaffUserProvider(config('mindbody-auth.staff_model'));
+        Auth::provider('mindbody_staff', function() {
+            return new MindbodyStaffUserProvider(config('mindbody_auth.staff_model'));
         });
 
-        Auth::provider('mindbody-client', function() {
-            return new MindbodyClientUserProvider(config('mindbody-auth.client_model'));
+        Auth::provider('mindbody_client', function() {
+            return new MindbodyClientUserProvider(config('mindbody_auth.client_model'));
         });
     }
 
