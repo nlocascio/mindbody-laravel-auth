@@ -13,10 +13,15 @@ class MindbodyStaffUserProvider implements UserProvider {
     public $model;
     protected $mindbodyApi;
 
-    public function __construct(Authenticatable $model)
+    /**
+     * MindbodyStaffUserProvider constructor.
+     * @param Authenticatable $model
+     * @param MindbodyService $mindbodyService
+     */
+    public function __construct(Authenticatable $model, MindbodyService $mindbodyService)
     {
         $this->model = $model;
-        $this->mindbodyApi = new MindbodyService;
+        $this->mindbodyApi = $mindbodyService;
     }
 
     /**
@@ -87,7 +92,6 @@ class MindbodyStaffUserProvider implements UserProvider {
     {
         if ( ! $user->email == $credentials['email'])
         {
-
             return false;
         }
 

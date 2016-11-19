@@ -1,4 +1,5 @@
 <?php
 return [
-    'model'    => 'App\User'
+    'staff_model'    => 'App\User',
+    'client_model'    => 'App\User',
 ];
