@@ -1,0 +1,3 @@
+Installation
+1. Add MindbodyAuthServiceProvider::class to your config/app.php providers array
+2. 
