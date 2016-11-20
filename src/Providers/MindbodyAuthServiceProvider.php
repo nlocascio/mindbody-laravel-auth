@@ -4,31 +4,30 @@ namespace Nlocascio\MindbodyAuth\Providers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use Nlocascio\Mindbody\Services\MindbodyService;
 
 class MindbodyAuthServiceProvider extends ServiceProvider
 {
     /**
      * Perform post-registration booting of services.
-     *
-     * @return void
      */
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../../config/mindbody-laravel-auth.php' => config_path('mindbody-laravel-auth.php'),
+            __DIR__.'/../../config/mindbody_auth.php' => config_path('mindbody_auth.php'),
         ]);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/mindbody-laravel-auth.php', 'mindbody_auth'
+            __DIR__.'/../../config/mindbody_auth.php', 'mindbody_auth'
         );
 
-        Auth::provider('mindbody_staff', function() {
-            return new MindbodyStaffUserProvider(config('mindbody_auth.staff_model'));
+        Auth::provider('mindbody', function ($app, $config) {
+            return new MindbodyUserProvider($app->make(MindbodyService::class), $config);
         });
 
-        Auth::provider('mindbody_client', function() {
-            return new MindbodyClientUserProvider(config('mindbody_auth.client_model'));
-        });
+//        Auth::provider('mindbody_client', function () use ($mindbodyService) {
+//            return new MindbodyClientUserProvider(config('mindbody_auth.client.model'), $mindbodyService);
+//        });
     }
 
     /**
