@@ -46,9 +46,9 @@ In your app's `config/auth.php`, add the following to the `providers` key:
 
 Note that your `model` can point to any Eloquent model which implements `Illuminate\Contracts\Auth\Authenticatable`. Depending on the needs of your application, you may prefer to have different models for different types of users; however, using the default `App/User.php` will work for many cases.
   
- #### Configure the Authentication Guards
+#### Configure the Authentication Guards
  
- In your app's `config/auth.php`, add the following to the `guards` key:
+In your app's `config/auth.php`, add the following to the `guards` key:
 
 
 ##### For MINDBODY Client credentials:
