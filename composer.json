@@ -1,6 +1,7 @@
 {
     "name": "nlocascio/mindbody-laravel-auth",
     "description": "MINDBODY Auth Wrapper for Laravel",
+    "license": "MIT",
     "type": "library",
     "minimum-stability": "stable",
     "require": {
