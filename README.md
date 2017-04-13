@@ -21,7 +21,7 @@ __This package requires `nlocascio/mindbody-laravel` to communicate with the MIN
 In `config/app.php`, append to the `providers` key **before** `App\Providers\AuthServiceProvider::class` is declared:
 
 ```php
-Nlocascio\MindbodyAuth\Providers\MindbodyAuthServiceProvider::class
+Nlocascio\MindbodyAuth\MindbodyAuthServiceProvider::class
 ```
 
 #### Configure the User Provider
