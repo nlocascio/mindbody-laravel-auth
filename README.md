@@ -31,7 +31,7 @@ In your app's `config/auth.php`, add the following to the `providers` key:
 ##### For authenticating Clients with MINDBODY:
 ```php
 'mindbody_clients' => [
-    'driver' => 'mindbody_clients',
+    'driver' => 'mindbody_client',
     'model' => App\User::class
 ],
 ```
@@ -55,7 +55,7 @@ In your app's `config/auth.php`, add the following to the `guards` key:
 ```php
 'mindbody_client' => [
     'driver' => 'session',
-    'provider' => 'mindbody_clients'
+    'provider' => 'mindbody_client'
 ],
 ```
 

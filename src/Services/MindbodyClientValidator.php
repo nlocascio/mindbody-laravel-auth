@@ -2,9 +2,8 @@
 
 namespace Nlocascio\MindbodyAuth\Services;
 
-use Illuminate\Support\Facades\Log;
 use Nlocascio\Mindbody\Exceptions\MindbodyErrorException;
-use Nlocascio\Mindbody\Services\MindbodyService;
+use Nlocascio\Mindbody\Mindbody as MindbodyService;
 use Nlocascio\MindbodyAuth\Contracts\MindbodyValidator;
 
 class MindbodyClientValidator implements MindbodyValidator
@@ -16,7 +15,6 @@ class MindbodyClientValidator implements MindbodyValidator
 
     /**
      * MindbodyClientValidator constructor.
-     *
      * @param MindbodyService $mindbodyService
      */
     public function __construct(MindbodyService $mindbodyService)
