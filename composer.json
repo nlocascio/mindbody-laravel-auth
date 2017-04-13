@@ -1,22 +1,38 @@
 {
     "name": "nlocascio/mindbody-laravel-auth",
     "description": "MINDBODY Auth Wrapper for Laravel",
-    "type": "library",
-    "minimum-stability": "stable",
+    "keywords": [
+        "laravel",
+        "mindbody",
+        "laravel mindbody auth provider"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick LoCascio",
+            "email": "nlocascio@gmail.com"
+        }
+    ],
     "require": {
-        "php": ">=5.4.0",
-        "laravel/framework": "^5.3",
-        "nlocascio/mindbody-laravel": "^0.2.0"
+        "php": "^7.0",
+        "illuminate/support": "5.1.* || 5.2.* || 5.3.* || 5.4.*",
+        "nlocascio/mindbody-laravel": "~0.3.3"
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^2.4",
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": "^5.4",
+        "mockery/mockery": "0.9.*",
+        "fzaninotto/faker": "~1.4"
     },
     "autoload": {
         "psr-4": {
             "Nlocascio\\MindbodyAuth\\": "src"
         }
     },
-    "authors": [
-        {
-            "name": "Nick LoCascio",
-            "email": "nlocascio@gmail.com"
+    "autoload-dev": {
+        "psr-4": {
+            "Nlocascio\\MindbodyAuth\\Tests\\": "tests"
         }
-    ]
+    }
 }
